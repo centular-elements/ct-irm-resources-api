@@ -1,0 +1,102 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
+<link rel="import" href="../ct-core-utils/ct-user-identity.html">
+<!--
+`ct-domains-api`
+API for domain management
+-->
+<dom-module id="ct-resource-types-api">
+  <template>
+
+    <ct-user-identity id="identity"></ct-user-identity>
+
+    <iron-ajax id="findSystemTypes"></iron-ajax>
+    <iron-ajax id="newResourceType"></iron-ajax>
+    <iron-ajax id="findResourceTypes"></iron-ajax>
+    <iron-ajax id="getResourceType"></iron-ajax>
+    <iron-ajax id="updateResourceType"></iron-ajax>
+    <iron-ajax id="deleteResourceType"></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ct-resource-types-api',
+      behaviors: [CT.Behaviours.ApiProvider],
+
+      /**
+       * Find system types
+       *
+       * @returns {Promise}
+       */
+      findSystemTypes: function() {
+        this.$.findSystemTypes.url = this._url('/rights/resourcetypes/system');
+        return this._generateRequest(this.$.findSystemTypes);
+      },
+
+      /**
+       * Create a new resource type
+       *
+       * @param {{ Object, name: string, description: string, systemTypeId: string, id: string, fields: [string], category: string }} newResourceType
+       * @returns {Promise}
+       */
+      newResourceType: function(newResourceType) {
+        this.$.newResourceType.url = this._url('/rights/resourcetypes');
+        this.$.newResourceType.method = "POST";
+        this.$.newResourceType.contentType = "application/json";
+        this.$.newResourceType.body = newResourceType;
+        return this._generateRequest(this.$.newResourceType);
+      },
+
+      /**
+       * Find resource types by filter values
+       *
+       * @returns {Promise}
+       */
+      findResourceTypes: function() {
+        this.$.findResourceTypes.url = this._url('/rights/resourcetypes');
+        return this._generateRequest(this.$.findResourceTypes);
+      },
+
+      /**
+       * Get a resource type by id
+       *
+       * @param {{ String, resourceTypeId: string }} resourceTypeId
+       * @returns {Promise}
+       */
+      getResourceType: function(resourceTypeId) {
+        this.$.getResourceType.url = this._url('/rights/resourcetypes/' + resourceTypeId);
+        return this._generateRequest(this.$.getResourceType);
+      },
+
+      /**
+       * Update a resource type
+       *
+       * @param {{ String, resourceTypeId: string }} resourceTypeId
+       * @param {{ Object, newFields: [string], newCategory: string, newName: string, newDescription: string, currentSystemType: string }} value
+       * @returns {Promise}
+       */
+      updateResourceType: function(resourceTypeId, value) {
+        this.$.updateResourceType.url = this._url('/rights/resourcetypes/' + resourceTypeId);
+        this.$.updateResourceType.method = "PUT";
+        this.$.updateResourceType.contentType = "application/json";
+        this.$.updateResourceType.body = value;
+        return this._generateRequest(this.$.updateResourceType);
+      },
+
+      /**
+       * Delete a resource type
+       *
+       * @param {{ String, resourceTypeId: string }} resourceTypeId
+       * @returns {Promise}
+       */
+      deleteResourceType: function(resourceTypeId) {
+        this.$.deleteResourceType.url = this._url('/rights/resourcetypes/' + resourceTypeId);
+        this.$.deleteResourceType.method = "DELETE";
+        this.$.deleteResourceType.contentType = "application/json";
+        return this._generateRequest(this.$.deleteResourceType);
+      }
+    });
+  </script>
+
+</dom-module>
