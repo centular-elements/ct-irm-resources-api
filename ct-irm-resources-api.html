@@ -1,0 +1,83 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../ct-core-utils/ct-api-provider-behaviour.html">
+<link rel="import" href="../ct-core-utils/ct-user-identity.html">
+<!--
+`ct-domains-api`
+API for domain management
+-->
+<dom-module id="ct-irm-resources-api">
+  <template>
+
+    <ct-user-identity id="identity"></ct-user-identity>
+
+    <iron-ajax id="registerResource"></iron-ajax>
+    <iron-ajax id="getResources"></iron-ajax>
+    <iron-ajax id="updateResource"></iron-ajax>
+    <iron-ajax id="deleteResource"></iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ct-irm-resources-api',
+      behaviors: [CT.Behaviours.ApiProvider],
+
+      /**
+       * Register a new resource
+       *
+       * @param {{ String, id: string }} id
+       * @param {{ String, name: string }} name
+       * @returns {Promise}
+       */
+      registerResource: function(id, name) {
+        this.$.registerResource.url = this._url('/rights/resources');
+        this.$.registerResource.method = "POST";
+        this.$.registerResource.contentType = "application/json";
+        this.$.registerResource.body = {
+          id: id,
+          name: name
+        };
+        return this._generateRequest(this.$.registerResource);
+      },
+
+      /**
+       * Find resources at a resource parent of a specified type
+       *
+       * @returns {Promise}
+       */
+      getResources: function(parentId, resourceTypeId, pageNumber, pageSize) {
+        this.$.getResources.url = this._url('/rights/resources?parent_id=' + parentId + '&resource_type_id=' + resourceTypeId);
+        return this._generateRequest(this.$.getResources);
+      },
+
+      /**
+       * Update a resource
+       *
+       * @param {{ String, id: string }} id
+       * @param {{ String, name: string }} name
+       * @returns {Promise}
+       */
+      updateResource: function(id, name) {
+        this.$.updateResource.url = this._url('/rights/resources/' + id);
+        this.$.updateResource.method = "PUT";
+        this.$.updateResource.contentType = "application/json";
+        this.$.updateResource.body = { name: name };
+        return this._generateRequest(this.$.updateResource);
+      },
+
+      /**
+       * Delete a resource type
+       *
+       * @param {{ String, id: string }} id
+       * @returns {Promise}
+       */
+      deleteResource: function(id) {
+        this.$.deleteResource.url = this._url('/rights/resources/' + id);
+        this.$.deleteResource.method = "DELETE";
+        this.$.deleteResource.contentType = "application/json";
+        return this._generateRequest(this.$.deleteResource);
+      }
+    });
+  </script>
+
+</dom-module>

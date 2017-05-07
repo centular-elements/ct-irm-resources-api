@@ -1,7 +1,7 @@
 {
-  "name": "ct-resource-types-api",
+  "name": "ct-irm-resources-api",
   "description": "API for resource type management",
-  "main": "ct-resource-types-api.html",
+  "main": "ct-irm-resources-api.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "iron-ajax": "PolymerElements/iron-ajax#^1.4.3",

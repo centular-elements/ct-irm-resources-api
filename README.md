@@ -1,4 +1,4 @@
-# \<ct-resource-types-api\>
+# \<ct-irm-resources-api\>
 
 API for resource type management
 
