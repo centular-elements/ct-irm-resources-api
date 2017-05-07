@@ -27,15 +27,17 @@ API for domain management
        *
        * @param {{ String, id: string }} id
        * @param {{ String, name: string }} name
+       * @param {{ String, resourceTypeId: string }} resourceTypeId
        * @returns {Promise}
        */
-      registerResource: function(id, name) {
+      registerResource: function(id, name, resourceTypeId) {
         this.$.registerResource.url = this._url('/rights/resources');
         this.$.registerResource.method = "POST";
         this.$.registerResource.contentType = "application/json";
         this.$.registerResource.body = {
           id: id,
-          name: name
+          name: name,
+          resourceTypeId: resourceTypeId
         };
         return this._generateRequest(this.$.registerResource);
       },
