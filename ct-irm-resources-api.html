@@ -32,7 +32,7 @@ API for domain management
        * @returns {Promise}
        */
       registerResource: function(id, name, resourceTypeId, parentId) {
-        this.$.registerResource.url = this._url('/rights/resources');
+        this.$.registerResource.url = this._url('/securables');
         this.$.registerResource.method = "POST";
         this.$.registerResource.contentType = "application/json";
         this.$.registerResource.body = {
@@ -50,7 +50,7 @@ API for domain management
        * @returns {Promise}
        */
       getResources: function(parentId, resourceTypeId, pageNumber, pageSize) {
-        this.$.getResources.url = this._url('/rights/resources?parent_id=' + parentId + '&resource_type_id=' + resourceTypeId);
+        this.$.getResources.url = this._url('/securables?parent_id=' + parentId + '&resource_type_id=' + resourceTypeId);
         return this._generateRequest(this.$.getResources);
       },
 
@@ -62,7 +62,7 @@ API for domain management
        * @returns {Promise}
        */
       updateResource: function(id, name) {
-        this.$.updateResource.url = this._url('/rights/resources/' + id);
+        this.$.updateResource.url = this._url('/securables/' + id);
         this.$.updateResource.method = "PUT";
         this.$.updateResource.contentType = "application/json";
         this.$.updateResource.body = { name: name };
@@ -76,7 +76,7 @@ API for domain management
        * @returns {Promise}
        */
       deleteResource: function(id) {
-        this.$.deleteResource.url = this._url('/rights/resources/' + id);
+        this.$.deleteResource.url = this._url('/securables/' + id);
         this.$.deleteResource.method = "DELETE";
         this.$.deleteResource.contentType = "application/json";
         return this._generateRequest(this.$.deleteResource);
